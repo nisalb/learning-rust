@@ -1,10 +1,14 @@
-use median_mode::stats;
+use median_mode::stats::basic;
 
 fn main() {
-    let nums = vec![0, 1, 2, 3];
+    let nums = vec![0, 1, 2, 3, 3, 4];
 
-    let median = stats::basic::median(&nums);
-    let mode = stats::basic::mode(&nums);
+    let median = basic::median(&nums);
+    println!("median = {median}");
 
-    println!("median = {median}, mode = {mode}");
+    if let Some(mode) = basic::mode(&nums) {
+        println!("mode = {mode}");
+    } else {
+        println!("no items");
+    }
 }

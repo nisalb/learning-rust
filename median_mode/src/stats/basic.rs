@@ -13,23 +13,15 @@ pub fn median(nums: &Vec<i64>) -> f64 {
     }
 }
 
-pub fn mode(nums: &Vec<i64>) -> i64 {
+pub fn mode(nums: &Vec<i64>) -> Option<i64> {
     let mut counts = HashMap::new();
 
     for i in nums {
-        let count = counts.entry(*i).or_insert(0);
-        *count += 1;
+        counts.entry(*i).and_modify(|n| *n += 1).or_insert(1);
     }
 
-    let mut max_count = 0;
-    let mut mode = 0;
-
-    for (elem, count) in &counts {
-        if max_count < *count {
-            max_count = *count;
-            mode = *elem;
-        }
-    }
-
-    mode
+    counts
+        .into_iter()
+        .max_by_key(|entry| entry.1)
+        .map(|entry| entry.0)
 }
