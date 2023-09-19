@@ -1,4 +1,4 @@
-use aggregator::{NewsArticle, Summary, Tweet};
+use aggregator::{BlogPost, NewsArticle, Pair, Summary, Tweet};
 
 fn main() {
     let article = NewsArticle {
@@ -8,8 +8,6 @@ fn main() {
         content: "TBW".to_string(),
     };
 
-    println!("{}", article.summarize());
-
     let tweet = Tweet {
         username: "nisalb".to_string(),
         content: "Rust allows me to be a better programmer".to_string(),
@@ -17,5 +15,24 @@ fn main() {
         reply: false,
     };
 
-    println!("{}", tweet.summarize());
+    let blog = BlogPost {
+        author: "nisalb".to_string(),
+        content: "This is a blog post".to_string(),
+    };
+
+    notify(&article);
+    notify(&tweet);
+    notify(&blog);
+
+    let pair = Pair::new(10, 25);
+    pair.cmp_display();
+}
+
+// pub fn notify(item : &impl Summary)
+// pub fn notify<T: Summary>(item: &T)
+pub fn notify<T>(item: &T)
+where
+    T: Summary,
+{
+    println!("Breaking news! {}", item.summarize());
 }
